@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.mapper.OrderDetailMapper">
+	<insert id="insert" parameterType="orderdetail">
+		INSERT INTO ORDERDETAIL
+		VALUES(CONCAT('orderDetailID_',TO_CHAR(orderDetailID_seq.NEXTVAL)),
+		#{totWeight},#{ingQuantity},#{ingID},#{ingName},#{ingPrice},#{ingTotPrice},
+		#{ingUnit},#{orderID},#{hqID},#{hqName},#{chainID},#{chainName},#{userID},
+		#{userName},#{conID},#{orderState})
+	</insert>
+	<insert id="update" parameterType="orderdetail">
+		UPDATE ORDERDETAIL SET
+		ORDERSTATE = '1'
+		WHERE orderDetailID = #{orderDetailID}
+	</insert>
+
+	<select id="select" parameterType="String"
+		resultType="orderdetail">
+		SELECT * FROM ORDERDETAIL WHERE
+		orderDetailID=#{orderDetailID}
+	</select>
+
+	<select id="selecthq" parameterType="String"
+		resultType="orderdetail">
+		SELECT * FROM ORDERDETAIL WHERE
+		hqID=#{hqID}
+	</select><!-- 추가한부분 -->
+
+	<select id="selectuser" parameterType="orderdetail"
+		resultType="orderdetail">
+		SELECT * FROM ORDERDETAIL WHERE
+		userID=#{userID}<!-- 추가한부분 -->
+	</select>
+	<select id="selectall" resultType="orderdetail">
+		SELECT * FROM ORDERDETAIL
+	</select>
+
+	<insert id="insertnew" parameterType="orderdetail">
+		INSERT INTO
+		ORDERDETAIL(orderDetailID,totWeight,ingQuantity,ingID,ingName,ingPrice,ingTotPrice,ingUnit,
+		orderID,hqID,hqName,chainID,chainName,conID)
+		VALUES(CONCAT('orderDetailID_',TO_CHAR(orderDetailID_seq.NEXTVAL)),
+		#{totWeight},#{ingQuantity},#{ingID},#{ingName},#{ingPrice},#{ingTotPrice},
+		#{ingUnit},#{orderID},#{hqID},#{hqName},#{chainID},#{chainName},#{conID})
+	</insert>
+</mapper>
